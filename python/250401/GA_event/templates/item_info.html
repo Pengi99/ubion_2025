@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event test2</title>
+    {% include 'ga.html' %}
+    <script>
+        function load(){
+            let select = {{selected}}
+            if (select == 1){
+                let item = '짜장'
+            }
+            else{
+                let item = '짬뽕'
+            }
+            gtag(
+                'event',
+                'select_item',
+                {
+                    item : item
+                }
+            )
+        }
+        function cnt_select(){
+            let cnt = document.getElementsByName('cnt')[0].value
+            gtag(
+                'event', 'cnt_select', {cnt : cnt}
+            )
+        }
+
+    </script>
+</head>
+<body onload="load()">
+    <form action = '/shop' method="get">
+    {% if selected == 1 %}
+    <label>가격</label>
+    <input type="number" value="7000" name="price" readonly>
+    <br>
+    <label>수량</label>
+    <input type="number" name="cnt">
+    <br>
+    {% else %}
+    <label>가격</label>
+    <input type="number" value="8000" name="price" readonly>
+    <br>
+    <label>수량</label>
+    <input type="number" name="cnt">
+    <br>
+    {% endif %}
+    <input type="submit" onclick="cnt_select()" value="주문">
+    </form>
+</body>
+</html>
